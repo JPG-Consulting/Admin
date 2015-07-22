@@ -1,0 +1,28 @@
+<div class="container">
+<div class="auth-form" id="login">
+<div class="auth-form-header">
+        <h1><?php echo $this->translate('Forgot password'); ?></h1>
+</div>
+        <?php 
+$form->setAttribute('action', $this->url('admin/password_reset'));
+$form->prepare();
+?>
+<?php 
+echo $this->form()->openTag($form);
+?>
+<div class="auth-form-body">
+<?php 
+$identity = $form->get('email');
+echo $this->formLabel($identity);
+echo $this->formInput($identity);
+//echo $this->formElementErrors($identity);
+
+echo $this->formElement($form->get('csrf'));
+echo $this->formSubmit($form->get('submit'));
+?>
+</div>
+<?php 
+echo $this->form()->closeTag();
+?>
+</div>
+</div> <!-- /container -->
