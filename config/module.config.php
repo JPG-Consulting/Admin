@@ -56,12 +56,50 @@ return array(
                             ),
                         ),
                     ),
+                    'settings' => array(
+                        'type'    => 'Literal',
+                        'options' => array(
+                            'route'    => '/settings',
+                            'defaults' => array(
+                                'controller'    => 'Settings',
+                        		'action'        => 'index',
+                            ),
+                        ),
+                        'may_terminate' => true,
+                		'child_routes' => array(
+                            'profile' => array(
+		                        'type'    => 'Literal',
+		                        'options' => array(
+		                            'route'    => '/profile',
+		                            'defaults' => array(
+		                                'controller'    => 'Settings',
+		                        		'action'        => 'profile',
+		                            ),
+		                        ),
+		                    ),
+		                    'admin' => array(
+		                        'type'    => 'Literal',
+		                        'options' => array(
+		                            'route'    => '/admin',
+		                            'defaults' => array(
+		                                'controller'    => 'Settings',
+		                        		'action'        => 'admin',
+		                            ),
+		                        ),
+		                    ),
+                        ),
+                    ),
                 ),
             ),
         ),
     ),
     'navigation' => array(
-        'admin' => array(),
+        'admin' => array(
+            array(
+            	'label' => 'Dashboard',
+            	'route' => 'admin',
+            ),
+        ),
     ),
     'service_manager' => array(
         'factories' => array(
@@ -81,7 +119,8 @@ return array(
     'controllers' => array(
         'invokables' => array(
             'Admin\Controller\Index'          => 'Admin\Controller\IndexController',
-            'Admin\Controller\Authentication' => 'Admin\Controller\AuthenticationController'
+            'Admin\Controller\Authentication' => 'Admin\Controller\AuthenticationController',
+            'Admin\Controller\Settings'       => 'Admin\Controller\SettingsController'
         ),
     ),
     'view_manager' => array(

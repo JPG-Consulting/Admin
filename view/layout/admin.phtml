@@ -3,55 +3,105 @@
 <html lang="en">
     <head>
         <meta charset="utf-8">
-        <?php echo $this->headTitle('ZF2 '. $this->translate('Skeleton Application'))->setSeparator(' - ')->setAutoEscape(false) ?>
-
         <?php echo $this->headMeta()
             ->appendName('viewport', 'width=device-width, initial-scale=1.0')
             ->appendHttpEquiv('X-UA-Compatible', 'IE=edge')
         ?>
+        <title><?php echo $this->translate("Admin Panel") ?></title>
 
         <!-- Le styles -->
         <?php echo $this->headLink(array('rel' => 'shortcut icon', 'type' => 'image/vnd.microsoft.icon', 'href' => $this->basePath() . '/img/favicon.ico'))
-                        ->prependStylesheet($this->basePath('css/style.css'))
-                        ->prependStylesheet($this->basePath('css/bootstrap-theme.min.css'))
+                        ->prependStylesheet($this->basePath('css/admin/style.css'))
+                        ->prependStylesheet($this->basePath('css/simple-line-icons.css'))
                         ->prependStylesheet($this->basePath('css/bootstrap.min.css')) ?>
 
         <!-- Scripts -->
         <?php echo $this->headScript()
-            ->prependFile($this->basePath('js/bootstrap.min.js'))
-            ->prependFile($this->basePath('js/jquery.min.js'))
             ->prependFile($this->basePath('js/respond.min.js'), 'text/javascript', array('conditional' => 'lt IE 9',))
             ->prependFile($this->basePath('js/html5shiv.min.js'),   'text/javascript', array('conditional' => 'lt IE 9',))
         ; ?>
 
     </head>
     <body>
-        <nav class="navbar navbar-inverse navbar-fixed-top" role="navigation">
-            <div class="container">
-                <div class="navbar-header">
-                    <button type="button" class="navbar-toggle" data-toggle="collapse" data-target=".navbar-collapse">
-                        <span class="icon-bar"></span>
-                        <span class="icon-bar"></span>
-                        <span class="icon-bar"></span>
-                    </button>
-                    <a class="navbar-brand" href="<?php echo $this->url('home') ?>"><img src="<?php echo $this->basePath('img/zf2-logo.png') ?>" alt="Zend Framework 2"/>&nbsp;<?php echo $this->translate('Skeleton Admin Panel') ?></a>
-                </div>
-                <div class="collapse navbar-collapse">
-                    <?php echo $this->navigation('admin_navigation')
-                                    ->menu()
-                                    ->setUlClass('nav navbar-nav')
-                                    ->setMaxDepth(0)
-                                    ->setRenderInvisible(false)?>
-                </div><!--/.nav-collapse -->
+    
+    	<div id="page-wrapper" class="collapsed">
+      <div id="sidebar-wrapper">
+        <div class="sidebar-header">
+          <span class="sidebar-title" href="#">Menu</span>
+        </div>
+        
+        <?php echo $this->navigation('admin_navigation')
+                        ->menu()
+                        ->setUlClass('nav navbar-stacked')
+                        ->setMaxDepth(1)
+                        ->setRenderInvisible(false)?>
+      </div> <!-- /#sidebar-wrapper -->
+      
+      <div id="page-content-wrapper">      
+        <!-- Fixed navbar -->
+        <nav class="navbar navbar-default navbar-fixed-top">
+          <div class="container-fluid">
+            <div class="navbar-header">
+              <button type="button" class="navbar-toggle collapsed" id="menu-toggle">
+                <span class="sr-only">Toggle navigation</span>
+                <span class="icon-bar"></span>
+                <span class="icon-bar"></span>
+                <span class="icon-bar"></span>
+              </button>
+              <button type="button" class="navbar-toggle collapsed" data-toggle="collapse" data-target="#navbar" aria-expanded="false" aria-controls="navbar">
+                <span class="sr-only">Toggle navigation</span>
+                <span class="icon-bar"></span>
+                <span class="icon-bar"></span>
+                <span class="icon-bar"></span>
+              </button>
+              <a class="navbar-brand" href="#">Admin Panel</a>
             </div>
+            <div id="navbar" class="navbar-collapse collapse">
+              <ul class="nav navbar-nav navbar-right">
+                <li><a href="#"><i class="icon-bell"></i></a></li>
+                <li><a href="#"><i class="icon-envelope-open"></i></a></li>
+                <li><a href="#"><i class="icon-calendar"></i></a></li>
+                <li class="dropdown">
+                  <a href="#" class="dropdown-toggle" data-toggle="dropdown" role="button" aria-haspopup="true" aria-expanded="false">
+                    <img src="<?php echo $this->basePath('img/avatar3_small.jpg') ?>" /> Admin <span class="caret"></span>
+                  </a>
+                  <ul class="dropdown-menu">
+                    <li><a href="<?php echo $this->url('admin/settings/profile') ?>">My Profile</a></li>
+                    <li role="separator" class="divider"></li>
+                    <li><a href="<?php echo $this->url('admin/logout') ?>">Sign Out</a></li>
+                  </ul>
+                </li>
+              </ul>
+            </div><!--/.nav-collapse -->
+          </div>
         </nav>
-        <div class="container">
-            <?php echo $this->content; ?>
-            <hr>
-            <footer>
-                <p>&copy; 2005 - <?php echo date('Y') ?> by Zend Technologies Ltd. <?php echo $this->translate('All rights reserved.') ?></p>
-            </footer>
+
+        <div class="container-fluid">
+
+          <?php echo $this->content; ?>
+          
+          <hr>
+		  <footer>
+		      <p>&copy; 2005 - <?php echo date('Y') ?> by Zend Technologies Ltd. <?php echo $this->translate('All rights reserved.') ?></p>
+		  </footer>
+          
         </div> <!-- /container -->
-        <?php echo $this->inlineScript() ?>
+
+      </div> <!-- /#page-content-wrapper -->
+    </div> <!-- /#page-wrapper -->
+		
+        <?php echo $this->inlineScript() 
+                        ->prependFile($this->basePath('js/ie10-viewport-bug-workaround.js'))
+                        ->prependFile($this->basePath('js/bootstrap.min.js'))
+                        ->prependFile($this->basePath('js/jquery.min.js'))
+        ?>
+        
+        <!-- Menu Toggle Script -->
+    	<script>
+    	$("#menu-toggle").click(function(e) {
+        	e.preventDefault();
+        	$("#page-wrapper").toggleClass("collapsed");
+    	});
+    	</script>
     </body>
 </html>
